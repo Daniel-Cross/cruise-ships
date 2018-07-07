@@ -8,6 +8,7 @@ function Ship(itinerary) {
 Ship.prototype.setSail = function setSail() {
   const itinerary = this.itinerary;
   const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
+
   if (currentPortIndex === (itinerary.ports.legnth - 1)) {
     throw new Error('End of itinerary reached');
   }

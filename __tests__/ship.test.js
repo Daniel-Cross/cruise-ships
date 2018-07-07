@@ -7,6 +7,7 @@ let ship;
 let calais;
 let itinerary;
 
+
 beforeEach(() => {
   dover = new Port('Dover');
   calais = new Port('Calais');
@@ -26,19 +27,22 @@ describe('ship', () => {
   it('can set sail', () => {
     ship.setSail();
     expect(ship.currentPort).toBeFalsy();
-
   });
 
   it('can dock at a different port', () => {
     ship.setSail();
     ship.dock();
-    expect(ship.currentPort).toBe('Calais');
+    expect(ship.currentPort).toBe(calais.currentPort);
   });
 
   it('can\'t sail further than its itinerary', () => {
     ship.setSail();
     ship.dock();
     expect(() => ship.setSail()).toThrowError('End of itinerary reached');
+  });
+
+  it('gets added to port on instantiation', () => {
+    expect(dover.ships).toContain(ship);
   });
 
 });
