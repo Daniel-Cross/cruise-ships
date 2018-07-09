@@ -6,13 +6,20 @@ let dover;
 let ship;
 let calais;
 let itinerary;
-
+let ships;
+let dockedShips;
+let itineraryOne;
+let shipOne;
 
 beforeEach(() => {
-  dover = new Port('Dover');
-  calais = new Port('Calais');
+  dover = new Port('Dover', ships);
+  calais = new Port('Calais', ships);
+  itineraryOne = new Itinerary([dover.currentPort]);
   itinerary = new Itinerary([dover.currentPort, calais.currentPort]);
   ship = new Ship(itinerary);
+  shipOne = new Ship(itineraryOne);
+  ships = ['HMS Victory', 'The Black Flag', 'HMS Titanic'];
+  dockedShips = new Port(dover.ships);
 });
 
 describe('ship', () => {
@@ -33,6 +40,8 @@ describe('ship', () => {
     ship.setSail();
     ship.dock();
     expect(ship.currentPort).toBe(calais.currentPort);
+    expect(calais.ships).toContain(ship);
+
   });
 
   it('can\'t sail further than its itinerary', () => {
@@ -42,7 +51,7 @@ describe('ship', () => {
   });
 
   it('gets added to port on instantiation', () => {
-    expect(dover.ships).toContain(ship);
+    expect(shipOne).toContain(dockedShips);
   });
 
 });

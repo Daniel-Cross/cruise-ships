@@ -21,6 +21,8 @@ Ship.prototype.dock = function dock() {
   const itinerary = this.itinerary;
   const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
   this.currentPort = itinerary.ports[previousPortIndex + 1];
+  this.currentPort.addShip(this);
+
 };
 
 module.exports = Ship;
