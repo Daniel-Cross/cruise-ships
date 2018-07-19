@@ -10,9 +10,28 @@ describe('Ship', () => {
   let ship;
 
   beforeEach(() => {
-    dover = new Port('Dover');
-    calais = new Port('Calais');
-    itinerary = new Itinerary([dover, calais]);
+
+    const port = {
+      removeShip: jest.fn(),
+      addShip: jest.fn(),
+    };
+
+    dover = {
+      ...port,
+      name: 'Dover',
+      ships: [],
+    };
+
+    calais = {
+      ...port,
+      name: 'calais',
+      ships: [],
+    };
+
+    itinerary = {
+      ports: [dover, calais],
+    };
+
     ship = new Ship(itinerary);
 
   });
@@ -21,7 +40,7 @@ describe('Ship', () => {
   });
 
   it('has a starting port', () => {
-    expect(dover.currentPort).toBe('Dover');
+    expect(ship.currentPort).toBe(dover);
   });
 
   it('sets sail from current port', () => {
