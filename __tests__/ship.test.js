@@ -1,57 +1,46 @@
 const Ship = require('../src/ship.js');
 const Port = require('../src/port.js');
-const Itinerary = require('../src/itinerary.js');
+const Itinerary = require('../src/itinerary');
 
-let dover;
-let ship;
-let calais;
-let itinerary;
-let ships;
-let dockedShips;
-let itineraryOne;
-let shipOne;
+describe('Ship', () => {
 
-beforeEach(() => {
-  dover = new Port('Dover', ships);
-  calais = new Port('Calais', ships);
-  itineraryOne = new Itinerary([dover.currentPort]);
-  itinerary = new Itinerary([dover.currentPort, calais.currentPort]);
-  ship = new Ship(itinerary);
-  shipOne = new Ship(itineraryOne);
-  ships = ['HMS Victory', 'The Black Flag', 'HMS Titanic'];
-  dockedShips = new Port(dover.ships);
-});
+  let dover;
+  let calais;
+  let itinerary;
+  let ship;
 
-describe('ship', () => {
+  beforeEach(() => {
+    dover = new Port('Dover');
+    calais = new Port('Calais');
+    itinerary = new Itinerary([dover, calais]);
+    ship = new Ship(itinerary);
+
+  });
   it('can be instantiated', () => {
     expect(ship).toBeInstanceOf(Object);
   });
 
   it('has a starting port', () => {
-    expect(ship.currentPort).toEqual(dover.currentPort);
+    expect(dover.currentPort).toBe('Dover');
   });
 
-  it('can set sail', () => {
+  it('sets sail from current port', () => {
     ship.setSail();
     expect(ship.currentPort).toBeFalsy();
+    expect(ship.previousPort).toBe(dover);
   });
 
   it('can dock at a different port', () => {
     ship.setSail();
     ship.dock();
-    expect(ship.currentPort).toBe(calais.currentPort);
-    expect(calais.ships).toContain(ship);
-
+    expect(ship.currentPort).toBe(calais);
   });
 
-  it('can\'t sail further than its itinerary', () => {
+  it('can\'t sail further than the itinerary', () => {
+
     ship.setSail();
     ship.dock();
     expect(() => ship.setSail()).toThrowError('End of itinerary reached');
-  });
-
-  it('gets added to port on instantiation', () => {
-    expect(shipOne).toContain(dockedShips);
   });
 
 });
