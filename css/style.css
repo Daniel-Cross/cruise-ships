@@ -19,3 +19,16 @@ body {
 
 }
 
+#ports {
+  width: 0;
+  margin-top: 96px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#ports > .port {
+  width: 64px;
+  height: 32px;
+  background-image: url('../images/port.png');
+}
+

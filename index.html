@@ -9,12 +9,25 @@
 </head>
 <body>
   <div id="water">
+    <div id="ports">
+
+    </div>
   </div>
 </body>
-<script src="controller.js"></script>
+<script src="src/controller.js"></script>
+<script src="src/itinerary.js"></script>
+<script src="src/port.js"></script>
 <script>
   const controller = new Controller();
+  const itinerary = new Itinerary([
+    new Port('Dover'),
+    new Port('Calais'),
+    new Port('New York'),
+    new Port('St Thomas')
+  ]);
+
+    controller.renderPorts(itinerary.ports);
+
 </script>
-<script> </script>
 
 </html>
