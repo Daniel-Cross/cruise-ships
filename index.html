@@ -9,14 +9,14 @@
 </head>
 <body>
   <div id="water">
-    <div id="ports">
-
-    </div>
+    <div id="ports"></div>
+    <div id="ship"></div>
   </div>
 </body>
 <script src="src/controller.js"></script>
 <script src="src/itinerary.js"></script>
 <script src="src/port.js"></script>
+<script src="src/ship.js"></script>
 <script>
   const controller = new Controller();
   const itinerary = new Itinerary([
@@ -25,9 +25,9 @@
     new Port('New York'),
     new Port('St Thomas')
   ]);
-
+    const ship = new Ship(itinerary);
     controller.renderPorts(itinerary.ports);
-
+    controller.renderShip(ship);
 </script>
 
 </html>
