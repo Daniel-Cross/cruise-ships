@@ -13,6 +13,13 @@
     <div id="ports"></div>
     <div id="ship"></div>
     <button id="setSail">Set Sail!</button>
+    <div id="hud">
+      <div>
+        Current Port: Dover
+      </div>
+      <div>
+        Next Port: Calais
+      </div>
   </div>
 </body>
 <script src="src/controller.js"></script>
@@ -20,7 +27,6 @@
 <script src="src/port.js"></script>
 <script src="src/ship.js"></script>
 <script>
-  const controller = new Controller();
   const itinerary = new Itinerary([
     new Port('Dover'),
     new Port('Calais'),
@@ -28,6 +34,8 @@
     new Port('St Thomas')
   ]);
     const ship = new Ship(itinerary);
+    const controller = new Controller(ship);
+
     controller.renderPorts(itinerary.ports);
     controller.renderShip(ship);
 </script>

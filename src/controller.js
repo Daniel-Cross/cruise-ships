@@ -1,7 +1,13 @@
 /* globals window document */
 (function exportController() {
-  function Controller() {
+  function Controller(ship) {
+    this.ship = ship;
     this.initialiseSea();
+
+    document.querySelector('#setSail').addEventListener('click', () => {
+      this.setSail();
+    });
+
 
   }
 
@@ -40,15 +46,61 @@
       });
     },
 
-    renderShip(ship) {
+    renderShip() {
+      const ship = this.ship;
+
       const shipPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
       const portElement = document.querySelector(`[data-port-index='${shipPortIndex}']`);
 
       const shipElement = document.querySelector('#ship');
       shipElement.style.top = `${portElement.offsetTop + 32}px`;
       shipElement.style.left = `${portElement.offsetLeft - 32}px`;
-
     },
+
+    setSail() {
+      const ship = this.ship;
+
+      const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+      //console.log(currentPortIndex);
+
+      const nextPortIndex = currentPortIndex + 1;
+      //console.log(nextPortIndex);
+
+      const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
+      //console.log(nextPortElement);
+
+      if (!nextPortElement) {
+        return alert('End of the line!');
+      }
+
+      this.renderMessage(`Now departing ${ship.currentPort.currentPort}`);
+      ship.setSail();
+      const shipElement = document.querySelector('#ship');
+      const sailInterval = setInterval(() => {
+        const shipLeft = parseInt(shipElement.style.left, 10);
+
+        if (shipLeft === (nextPortElement.offsetLeft - 32)) {
+          ship.dock();
+          clearInterval(sailInterval);
+        }
+
+        shipElement.style.left = `${shipLeft + 1}px`;
+      }, 20);
+    },
+
+    renderMessage(message) {
+      const messageElement = document.createElement('div');
+      messageElement.id = 'message';
+      messageElement.innerHTML = message;
+
+      const water = document.querySelector('#water');
+      water.appendChild(messageElement);
+
+      setTimeout(() => {
+        water.removeChild(messageElement);
+      }, 2000);
+    },
+
   };
 
 
