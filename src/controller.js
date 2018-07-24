@@ -73,6 +73,8 @@
         return alert('End of the line!');
       }
 
+      this.hud();
+
       this.renderMessage(`Now departing ${ship.currentPort.currentPort}`);
       ship.setSail();
       const shipElement = document.querySelector('#ship');
@@ -82,6 +84,8 @@
         if (shipLeft === (nextPortElement.offsetLeft - 32)) {
           ship.dock();
           clearInterval(sailInterval);
+          this.renderMessage(`Now arriving at ${ship.currentPort.name}`);
+          this.hud();
         }
 
         shipElement.style.left = `${shipLeft + 1}px`;
@@ -99,6 +103,19 @@
       setTimeout(() => {
         water.removeChild(messageElement);
       }, 2000);
+    },
+
+    hud() {
+      const ship = this.ship;
+      const currentPortIndex = ship.itinerary.ports.indexOf(ship.currentPort);
+      const nextPortIndex = currentPortIndex + 1;
+
+      const hudOneElement = document.querySelector('#hud1');
+      hudOneElement.id = 'hud1';
+      hudOneElement.innerHTML = `Current Port: ${ship.currentPort.currentPort}`;
+      const hudTwoElement = document.querySelector('#hud2');
+      hudTwoElement.id = 'hud2';
+      hudTwoElement.innerHTML = `Next Port: ${ship.itinerary.ports[nextPortIndex].currentPort}`;
     },
 
   };
